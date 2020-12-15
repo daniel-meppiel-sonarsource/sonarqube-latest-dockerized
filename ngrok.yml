@@ -1,0 +1,16 @@
+region: 'eu'
+log: 'stdout'
+web_addr: '0.0.0.0:4040'
+tunnels:
+    sq:
+        proto: 'http'
+        addr: 'reverse_proxy:80'
+        subdomain: 'dmeppiel'
+        host_header: 'dmeppiel'
+        bind_tls: true
+    jenkins:
+        proto: 'http'
+        addr: 'reverse_proxy:80'
+        subdomain: 'jenkins.dmeppiel'
+        host_header: 'jenkins.dmeppiel'
+        bind_tls: false
