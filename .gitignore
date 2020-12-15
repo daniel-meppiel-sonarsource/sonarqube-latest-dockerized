@@ -4,3 +4,4 @@ sonarqube-8-ee-docker/logs/*
 !sonarqube-8-ee-docker/logs/.gitkeep
 postgres/*
 !postgres/.gitkeep
+.DS_Store
