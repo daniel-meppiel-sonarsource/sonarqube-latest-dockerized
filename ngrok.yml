@@ -4,13 +4,13 @@ web_addr: '0.0.0.0:4040'
 tunnels:
     sq:
         proto: 'http'
-        addr: 'reverse_proxy:80'
+        addr: 'reverse_proxy'
         subdomain: 'dmeppiel'
-        host_header: 'dmeppiel'
-        bind_tls: true
+        host_header: 'dmeppiel.eu.ngrok.io'
+        bind_tls: both
     jenkins:
         proto: 'http'
-        addr: 'reverse_proxy:80'
-        subdomain: 'jenkins.dmeppiel'
-        host_header: 'jenkins.dmeppiel'
-        bind_tls: false
+        addr: 'reverse_proxy'
+        subdomain: 'jenkins-dmeppiel'
+        host_header: 'jenkins-dmeppiel.eu.ngrok.io'
+        bind_tls: both

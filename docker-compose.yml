@@ -9,7 +9,9 @@ services:
     image: wernight/ngrok:latest
     depends_on:
       - reverse_proxy
-    command: ['ngrok', 'start', '--all', '-authtoken=1cO6ViKnTOmEKNGQcnkSiSWJabG_56poXSAzpjB8jrqF2sP6B']
+    env_file:
+      - .env
+    command: ['ngrok', 'start', '--all', '-authtoken=${NGROK_AUTH_TOKEN}']
     volumes:
       -
           type: 'bind'
@@ -44,7 +46,7 @@ services:
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_extensions:/opt/sonarqube/extensions
-      - ./sonarqube-8-ee-docker/logs:/opt/sonarqube/logs
+      - ./sonarqube/logs:/opt/sonarqube/logs
       - sonarqube_data:/opt/sonarqube/data
 
   db:
@@ -59,24 +61,17 @@ services:
       - ./postgres:/var/lib/postgresql/data
 
   jenkins:
-    image: jenkinsci/blueocean:latest
-    container_name: jenkins
-    hostname: jenkins
-    volumes:
-      - type: volume
-        source: jenkins-docker-certs
-        target: /certs/client
-        read_only: true
-      - type: volume
-        source: jenkins-data
-        target: /var/jenkins_home
-        read_only: false
-      - type: bind
-        source: ~/
-        target: /home
+    image: jenkins/jenkins
+    privileged: true
+    user: root
     ports:
       - 8080:8080
-
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+    
 volumes:
   sonarqube_extensions:
     name: sonarqube_extensions
@@ -86,12 +81,5 @@ volumes:
     name: sonarqube_conf
   sonarqube_logs:
     name: sonarqube_logs
-  jenkins-data:
-    name: jenkins-data
-    driver: local
-    driver_opts:
-      type: none
-      device: $PWD/jenkins/home
-      o: bind
-  jenkins-docker-certs:
-    name: jenkins-docker-certs
+  jenkins_home:
+    name: jenkins_home
