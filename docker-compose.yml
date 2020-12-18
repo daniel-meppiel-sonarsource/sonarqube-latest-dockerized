@@ -44,7 +44,6 @@ services:
       SONAR_JDBC_PASSWORD: sonar
       SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar8
     volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_extensions:/opt/sonarqube/extensions
       - ./sonarqube/logs:/opt/sonarqube/logs
       - sonarqube_data:/opt/sonarqube/data
@@ -77,9 +76,5 @@ volumes:
     name: sonarqube_extensions
   sonarqube_data:
     name: sonarqube_data
-  sonarqube_conf:
-    name: sonarqube_conf
-  sonarqube_logs:
-    name: sonarqube_logs
   jenkins_home:
     name: jenkins_home
