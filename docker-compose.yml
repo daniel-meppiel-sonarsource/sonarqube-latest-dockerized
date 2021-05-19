@@ -34,7 +34,7 @@ services:
       - ./reverse_proxy/certs:/etc/ssl/private
 
   sq-8-ee:
-    image: sonarqube:8.6-enterprise
+    image: sonarqube:latest
     ports:
     - 9083:9000
     depends_on:
